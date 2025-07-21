@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JobWise - Job Application Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function fetchApplications() {
+            const response = await fetch('/get_applications');
+            const data = await response.json();
+            const tableBody = document.getElementById('submitted-table-body');
+            tableBody.innerHTML = '';
+            data.forEach(app => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${app.company}</td>
+                        <td>${app.role}</td>
+                        <td>${app.status}</td>
+                        <td>${app.resume}</td>
+                        <td>${app.date_applied}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function customizeResume(event) {
+            event.preventDefault();
+            const resume = document.getElementById('resume-input').value;
+            const jobDescription = document.getElementById('job-desc-input').value;
+
+            const response = await fetch('/customize_resume', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ resume, job_description: jobDescription })
+            });
+
+            const data = await response.json();
+            document.getElementById('customized-resume-output').innerText = data.customized_resume || data.error;
+        }
+
+        async function addApplication(event) {
+            event.preventDefault();
+            const payload = {
+                company: document.getElementById('company').value,
+                role: document.getElementById('role').value,
+                status: document.getElementById('status').value,
+                resume: document.getElementById('resume').value,
+                date_applied: document.getElementById('date_applied').value
+            };
+
+            const response = await fetch('/add_application', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            alert(data.message || data.error);
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+            if (tabId === 'submitted') fetchApplications();
+        }
+    </script>
+</head>
+<body onload="showTab('home')">
+
+    <header>
+        <h1>JobWise</h1>
+        <nav>
+            <ul>
+                <li onclick="showTab('home')">🏠 Home</li>
+                <li onclick="showTab('add')">📩 Add Application</li>
+                <li onclick="showTab('submitted')">📋 Submitted Applications</li>
+                <li onclick="showTab('customize')">📝 Customize Resume</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="tab-content">
+            <p>
+                Welcome to <strong>JobWise</strong>, your personalized job application tracker. Easily manage all your job applications, customize resumes based on job descriptions using AI, and stay organized in your job search journey.
+            </p>
+        </section>
+
+        <section id="add" class="tab-content">
+            <h2>Add New Application</h2>
+            <form onsubmit="addApplication(event)">
+                <input id="company" placeholder="Company Name" required />
+                <input id="role" placeholder="Role" required />
+                <input id="status" placeholder="Status" required />
+                <input id="resume" placeholder="Resume Version" />
+                <input id="date_applied" type="date" />
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section id="submitted" class="tab-content">
+            <h2>Submitted Applications</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Resume</th>
+                        <th>Date Applied</th>
+                    </tr>
+                </thead>
+                <tbody id="submitted-table-body"></tbody>
+            </table>
+        </section>
+
+        <section id="customize" class="tab-content">
+            <h2>Customize Resume</h2>
+            <form onsubmit="customizeResume(event)">
+                <textarea id="resume-input" placeholder="Paste your resume here" rows="6"></textarea>
+                <textarea id="job-desc-input" placeholder="Paste the job description here" rows="6"></textarea>
+                <button type="submit">Customize</button>
+            </form>
+            <h3>Customized Resume Output:</h3>
+            <pre id="customized-resume-output"></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ by JobWise | Contact: jobwise@example.com</p>
+    </footer>
+
+</body>
+</html>
+
+
+
+

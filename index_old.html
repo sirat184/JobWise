@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Application Tracker</title>
+</head>
+<body>
+  <h2>Job Application Tracker</h2>
+
+  <!--  Form to Add Application -->
+  <form id="jobForm">
+    <label>Company:</label><br>
+    <input type="text" name="company" required><br><br>
+
+    <label>Role:</label><br>
+    <input type="text" name="role" required><br><br>
+
+    <label>Status:</label><br>
+    <input type="text" name="status" placeholder="Applied / Interview / Offer / Rejected" required><br><br>
+
+    <label>Resume (paste a few lines):</label><br>
+    <textarea name="resume" rows="5" cols="40" required></textarea><br><br>
+
+    <label>Date Applied:</label><br>
+    <input type="date" name="date_applied" required><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="message"></p>
+
+  <!-- Table to View Applications -->
+  <h3>Submitted Applications</h3>
+  <table border="1" id="applicationsTable" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Resume</th>
+        <th>Date Applied</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById("jobForm");
+    const message = document.getElementById("message");
+    const tableBody = document.querySelector("#applicationsTable tbody");
+
+    //  Submit form
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const data = {
+        company: form.company.value,
+        role: form.role.value,
+        status: form.status.value,
+        resume: form.resume.value,
+        date_applied: form.date_applied.value,
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/add_application", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        message.textContent = result.message || result.error;
+
+        if (response.ok) {
+          form.reset();
+          fetchApplications(); // refresh table
+        }
+      } catch (error) {
+        message.textContent = "Something went wrong: " + error.message;
+        console.error(error);
+      }
+    });
+
+    // Fetch and show existing applications
+    async function fetchApplications() {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/get_applications");
+        const applications = await response.json();
+
+        tableBody.innerHTML = "";
+        applications.forEach(app => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${app.id}</td>
+            <td>${app.company}</td>
+            <td>${app.role}</td>
+            <td>${app.status}</td>
+            <td><pre style="white-space:pre-wrap">${app.resume}</pre></td>
+            <td>${app.date_applied}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error("Error fetching applications:", error);
+      }
+    }
+
+    // Load applications on page load
+    window.onload = fetchApplications;
+  </script>
+  <hr>
+<h3> AI Resume Customizer</h3>
+
+<label>Paste your resume:</label><br>
+<textarea id="originalResume" rows="10" cols="70"></textarea><br><br>
+
+<label>Target Job Role:</label><br>
+<input type="text" id="targetRole"><br><br>
+
+<button onclick="customizeResume()">Customize Resume</button>
+
+<h4>Customized Resume:</h4>
+<pre id="customizedOutput" style="white-space:pre-wrap; background:#f0f0f0; padding:10px;"></pre>
+
+<script>
+  async function customizeResume() {
+    const resume = document.getElementById("originalResume").value.trim();
+    const jobDescription = document.getElementById("targetRole").value.trim();
+    const output = document.getElementById("customizedOutput");
+
+    if (!resume || !jobDescription) {
+      output.textContent = "Please enter both resume and job description.";
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/customize_resume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          resume: resume,
+          job_description: jobDescription  
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.customized_resume) {
+        output.textContent = result.customized_resume;
+      } else {
+        output.textContent = "Error: " + (result.error || "Something went wrong.");
+      }
+    } catch (error) {
+      output.textContent = "Something went wrong: " + error.message;
+    }
+  }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Job Applications</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Job Applications</h2>
+  <table id="applicationsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Date Applied</th>
+        <th>Resume</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://127.0.0.1:5000/get_applications')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector('#applicationsTable tbody');
+        data.forEach(app => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${app.id}</td>
+            <td>${app.company}</td>
+            <td>${app.role}</td>
+            <td>${app.status}</td>
+            <td>${app.date_applied}</td>
+            <td><pre>${app.resume}</pre></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Failed to load applications:", error);
+      });
+  </script>
+</body>
+</html>

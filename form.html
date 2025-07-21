@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Application Form</title>
+</head>
+<body>
+    <h2>Job Application Tracker</h2>
+    <form id="jobForm">
+        <label>Company:</label><br>
+        <input type="text" name="company"><br><br>
+
+        <label>Role:</label><br>
+        <input type="text" name="role"><br><br>
+
+        <label>Status:</label><br>
+        <input type="text" name="status" placeholder="Applied / Interview / Offer / Rejected"><br><br>
+
+        <label>Resume (paste a few lines):</label><br>
+        <textarea name="resume" rows="5" cols="40"></textarea><br><br>
+
+        <label>Date Applied:</label><br>
+        <input type="date" name="date_applied"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="message"></p>
+
+    <script>
+    document.getElementById('jobForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const data = {
+            company: form.company.value,
+            role: form.role.value,
+            status: form.status.value,
+            resume: form.resume.value,
+            date_applied: form.date_applied.value
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/add_application', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Server error: ${response.status} ${errorText}`);
+            }
+
+            const result = await response.json();
+            document.getElementById('message').textContent = "Done" + result.message;
+document.getElementById('jobForm').reset();  // optional: clears the form
+
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('message').textContent = "Something went wrong: " + error.message;
+        }
+    });
+</script>
+
+</body>
+</html>

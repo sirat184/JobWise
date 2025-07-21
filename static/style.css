@@ -1,0 +1,99 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f0f6fc; /* lightest background blue */
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3a67a8; /* cornflower blue */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+nav li {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: #5b8edc; /* soft blue button */
+    border-radius: 5px;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+nav li:hover {
+    background-color: #3a67a8; /* darker cornflower hover */
+}
+
+main {
+    padding: 2rem;
+    background-color: white;
+    margin: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tab-content {
+    display: none;
+}
+
+form input, form textarea {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #b0c4de;
+    border-radius: 5px;
+    background-color: #f8fbff;
+}
+
+form button {
+    background-color: #6495ed; /* cornflower blue */
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #3a67a8; /* hover blue */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fdfefe;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
+}
+
+th, td {
+    border: 1px solid #d6eaf8;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background-color: #ddeeff;
+    color: #2c3e50;
+}
+
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: #eaf3fc; /* soft footer blue */
+    color: #5d6d7e;
+    font-size: 0.95rem;
+}
