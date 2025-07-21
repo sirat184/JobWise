@@ -15,15 +15,11 @@
 
 ## Screenshots
 
-<img width="800" height="300" alt="Screenshot 2025-07-21 170743" src="https://github.com/user-attachments/assets/8fc07642-96f1-411d-8fa2-06e7f91d7fd3" />
-
-
-
-
-<img width="800" height="300" alt="Screenshot 2025-07-21 165900" src="https://github.com/user-attachments/assets/3d77d07e-7a61-4162-ba1a-7b640b7a30d9" />
-<img width="800" height="300" alt="Screenshot 2025-07-21 165922" src="https://github.com/user-attachments/assets/6917f1ce-e703-48f9-899f-c248f5806eec" />
-<img width="800" height="300" alt="Screenshot 2025-07-21 170519" src="https://github.com/user-attachments/assets/acc99441-1f7f-4f36-8013-a439301c94b0" />
-<img width="800" height="300" alt="Screenshot 2025-07-21 170550" src="https://github.com/user-attachments/assets/fde6e2b2-231d-4959-8d81-1adee5f21aa4" />
+<img width="700" height="300" alt="Screenshot 2025-07-21 170743" src="https://github.com/user-attachments/assets/8fc07642-96f1-411d-8fa2-06e7f91d7fd3" />
+<img width="700" height="300" alt="Screenshot 2025-07-21 165900" src="https://github.com/user-attachments/assets/3d77d07e-7a61-4162-ba1a-7b640b7a30d9" />
+<img width="700" height="300" alt="Screenshot 2025-07-21 165922" src="https://github.com/user-attachments/assets/6917f1ce-e703-48f9-899f-c248f5806eec" />
+<img width="700" height="300" alt="Screenshot 2025-07-21 170519" src="https://github.com/user-attachments/assets/acc99441-1f7f-4f36-8013-a439301c94b0" />
+<img width="700" height="300" alt="Screenshot 2025-07-21 170550" src="https://github.com/user-attachments/assets/fde6e2b2-231d-4959-8d81-1adee5f21aa4" />
 
 
 
@@ -68,5 +64,8 @@
     python app.py
 
 
+** Author**
+Gursirat Kaur
+Email: sirat8122@gmil.com
 
 
