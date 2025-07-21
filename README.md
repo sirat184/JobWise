@@ -44,28 +44,28 @@
 
 **1.Clone the repository**
 
-git clone https://github.com/sirat184/JobWise.git
-cd JobWise
+    git clone https://github.com/sirat184/JobWise.git
+    cd JobWise
 
 **2.Create and activate a virtual environment**
 
-python -m venv venv
-venv\Scripts\activate   # For Windows
-or
-source venv/bin/activate  # For macOS/Linux
+    python -m venv venv
+    venv\Scripts\activate   # For Windows
+    or
+    source venv/bin/activate  # For macOS/Linux
 
 **3.Install dependencies**
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 **4.Set up environment variables**
 
-Create a file named .env in the root folder and add your OpenRouter API key:
-OPENROUTER_API_KEY=your_openrouter_api_key_here
+    Create a file named .env in the root folder and add your OpenRouter API key:
+    OPENROUTER_API_KEY=your_openrouter_api_key_here
 
 **5.Run the Flask application**
 
-python app.py
+    python app.py
 
 
 
